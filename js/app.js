@@ -36,13 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
 marca.addEventListener('change', (evento) => {
   datosBusqueda.marca = evento.target.value;
 
-  console.log(datosBusqueda);
+  filtrarAuto();
 });
 // Event listener para los select de búqueda
 year.addEventListener('change', (evento) => {
-  datosBusqueda.year = evento.target.value;
+  datosBusqueda.year = parseInt(evento.target.value);
 
-  console.log(datosBusqueda);
+  filtrarAuto();
 });
 // Event listener para los select de búqueda
 minimo.addEventListener('change', (evento) => {
@@ -103,4 +103,33 @@ function llenarSelect() {
     option.textContent = i;
     year.appendChild(option); //agrega las opcion del año al select
   }
+}
+
+// Función que filtra en base a la búsqueda
+function filtrarAuto() {
+  // devuelve un nuevo arreglo iterado
+  const resultado = autos.filter(filtrarMarca).filter(filtrarYear);
+
+  console.log(resultado);
+}
+
+function filtrarMarca(auto) {
+  const { marca } = datosBusqueda;
+
+  // Si hay un valor en los datosBusqueda de marca
+  if (marca) {
+    // devuelve la marca del objeto datosBusqueda que coincida con los objetos de auto
+    return auto.marca == marca;
+  }
+  return auto;
+}
+
+function filtrarYear(auto) {
+  const { year } = datosBusqueda;
+
+  if (year) {
+    return auto.year === year; //convertimos a entero
+  }
+
+  return auto;
 }
