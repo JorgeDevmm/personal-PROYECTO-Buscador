@@ -26,7 +26,7 @@ const datosBusqueda = {
 
 //Eventos
 document.addEventListener('DOMContentLoaded', () => {
-  mostrarAutos(); //muestra los automoviles al cargar
+  mostrarAutos(autos); //muestra los automoviles al cargar
 
   // LLena las opciones de años
   llenarSelect();
@@ -76,7 +76,9 @@ color.addEventListener('change', (evento) => {
 });
 
 //Funciones
-function mostrarAutos() {
+function mostrarAutos(autos) {
+  limpiarHTML(); //Elimina el html previo
+
   // Recorremos el arreglos de objetos de autos
   autos.forEach((auto) => {
     // Aplicando destructuring
@@ -90,6 +92,13 @@ function mostrarAutos() {
     // almacenamos en el div resultado los parrafos
     resultado.appendChild(autoHTML);
   });
+}
+
+// Limpiar contenido del HTML
+function limpiarHTML() {
+  while (resultado.firstChild) {
+    resultado.removeChild(resultado.firstChild);
+  }
 }
 
 // Genera los años del select
@@ -110,7 +119,8 @@ function filtrarAuto() {
   // devuelve un nuevo arreglo iterado
   const resultado = autos.filter(filtrarMarca).filter(filtrarYear);
 
-  console.log(resultado);
+  // console.log(resultado);
+  mostrarAutos(resultado);
 }
 
 function filtrarMarca(auto) {
@@ -130,6 +140,5 @@ function filtrarYear(auto) {
   if (year) {
     return auto.year === year; //convertimos a entero
   }
-
   return auto;
 }
