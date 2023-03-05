@@ -58,7 +58,7 @@ maximo.addEventListener('change', (evento) => {
 });
 // Event listener para los select de búqueda
 puertas.addEventListener('change', (evento) => {
-  datosBusqueda.puertas = evento.target.value;
+  datosBusqueda.puertas = parseInt(evento.target.value);
 
   filtrarAuto();
 });
@@ -122,7 +122,10 @@ function filtrarAuto() {
     .filter(filtrarMarca)
     .filter(filtrarYear)
     .filter(filtrarMinimo)
-    .filter(filtrarMaximo);
+    .filter(filtrarMaximo)
+    .filter(filtroPuertas)
+    .filter(filtroPTransmision)
+    .filter(filtroColor);
 
   // console.log(resultado);
   mostrarAutos(resultado);
@@ -162,6 +165,31 @@ function filtrarMaximo(auto) {
 
   if (maximo) {
     return auto.precio <= maximo; //vprecio >= al minimo
+  }
+  return auto;
+}
+
+function filtroPuertas(auto) {
+  const { puertas } = datosBusqueda;
+
+  if (puertas) {
+    return auto.puertas === puertas; //convertimos a entero
+  }
+  return auto;
+}
+function filtroPTransmision(auto) {
+  const { transmision } = datosBusqueda;
+
+  if (transmision) {
+    return auto.transmision === transmision; //convertimos a entero
+  }
+  return auto;
+}
+function filtroColor(auto) {
+  const { color } = datosBusqueda;
+
+  if (color) {
+    return auto.color === color; //convertimos a entero
   }
   return auto;
 }
